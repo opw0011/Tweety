@@ -1,14 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Tweety" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,7 +20,36 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tweety App :)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LNm-Uj-Eyf">
+                                <rect key="frame" x="81" y="20" width="213" height="42"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v7Q-fM-EsE">
+                                <rect key="frame" x="147" y="82" width="81" height="30"/>
+                                <state key="normal" title="Send Tweet"/>
+                                <connections>
+                                    <action selector="SendTweetButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Y6b-MG-OoY"/>
+                                </connections>
+                            </button>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YBj-PD-Fi9">
+                                <rect key="frame" x="16" y="122" width="343" height="545"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="YBj-PD-Fi9" secondAttribute="trailing" id="3B6-V3-12b"/>
+                            <constraint firstItem="YBj-PD-Fi9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="3pJ-F0-xHa"/>
+                            <constraint firstItem="v7Q-fM-EsE" firstAttribute="top" secondItem="LNm-Uj-Eyf" secondAttribute="bottom" constant="20" id="Dzj-iS-iZp"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="YBj-PD-Fi9" secondAttribute="bottom" id="RhG-Dg-ZDh"/>
+                            <constraint firstItem="YBj-PD-Fi9" firstAttribute="top" secondItem="LNm-Uj-Eyf" secondAttribute="bottom" constant="60" id="Y60-vG-hct"/>
+                            <constraint firstItem="LNm-Uj-Eyf" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="rat-vK-aqe"/>
+                            <constraint firstItem="v7Q-fM-EsE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uU7-3h-uIe"/>
+                            <constraint firstItem="LNm-Uj-Eyf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="y1O-Yc-QG2"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
