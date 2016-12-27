@@ -9,13 +9,28 @@
 import UIKit
 import Social
 
-class ViewController: UIViewController {
+class ViewController: UITableViewController {
     
-    @IBOutlet weak var twitterWebView: UIWebView!
+    var parsedTweets: [ParsedTweet] = [
+        ParsedTweet(tweetText: "Content",
+                    userName: "@oo",
+                    createdAt: "2016-2-23",
+                    userAvatarURL: NSURL(string: "https://abs.twimg.com/sticky/default_profile_images/default_profile_6_200x200.png")
+                    ),
+        ParsedTweet(tweetText: "Content 2",
+                    userName: "@o",
+                    createdAt: "2016-7-23",
+                    userAvatarURL: NSURL(string: "https://abs.twimg.com/sticky/default_profile_images/default_profile_6_normal.png")
+        )
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        reloadTweets()
+        self.refreshControl?.addTarget(self, action: #selector(ViewController.handleRefresh(sender:)), for: .valueChanged)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -23,42 +38,47 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func SendTweetButtonClicked(_ sender: UIButton) {
-        NSLog("Send tweet button is clicked")
-        
-        // check whether twitter is available in the device
-        if SLComposeViewController.isAvailable(forServiceType: SLServiceTypeTwitter) {
-            
-            // create a tweeter view controller
-            let tweetVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-            
-            tweetVC?.setInitialText("Testing String")
-            
-            // show the tweet view controller
-            self.present(tweetVC!, animated: true, completion: nil)
-        } else {
-            NSLog("Your device does not support twitter")
-        }
-        
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
-
-    @IBAction func showTweetButtonClicked(_ sender: UIButton) {
-        NSLog("Show tweet button is clicked")
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return parsedTweets.count
+    }
+    
+//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return "Section \(section)"
+//    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        // if the url is valid
-        /*
-        if let targetURL = NSURL(string: "https://twitter.com/superlOrzx") {
-            let urlRequest = NSURLRequest(url: targetURL as URL)
-            twitterWebView.loadRequest(urlRequest as URLRequest)
-        }*/
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomTweetCell") as! ParsedTweetCell
         
-        guard let targetURL = NSURL(string: "https://twitter.com/superlOrzx") else {
-            NSLog("Not a valid url")
-            return
+        let parsedTweet = parsedTweets[indexPath.row]
+        cell.userNameLabel.text = parsedTweet.userName
+        cell.tweetTextLabel.text = parsedTweet.tweetText
+        cell.createdAtLabel.text = parsedTweet.createdAt
+        if let url = parsedTweet.userAvatarURL, let imageData = NSData(contentsOf: url as URL) {
+            cell.avatarImageView.image = UIImage(data: imageData as Data)
         }
-        let urlRequest = NSURLRequest(url: targetURL as URL)
-        twitterWebView.loadRequest(urlRequest as URLRequest)
         
+        return cell
+    }
+    
+    func reloadTweets() {
+        tableView.reloadData()
+    }
+    
+    @IBAction func handleRefresh (sender: AnyObject?) {
+        parsedTweets.append(
+            ParsedTweet(tweetText: "New tweet",
+                        userName: "@refresh",
+                        createdAt: NSDate().description,
+                        userAvatarURL: NSURL(string: "https://abs.twimg.com/sticky/default_profile_images/default_profile_6_200x200.png")
+            )
+        )
+        reloadTweets()
+        refreshControl?.endRefreshing()
     }
 }
 
