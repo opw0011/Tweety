@@ -10,6 +10,8 @@ import UIKit
 import Social
 
 class ViewController: UIViewController {
+    
+    @IBOutlet weak var twitterWebView: UIWebView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,5 +42,23 @@ class ViewController: UIViewController {
         
     }
 
+    @IBAction func showTweetButtonClicked(_ sender: UIButton) {
+        NSLog("Show tweet button is clicked")
+        
+        // if the url is valid
+        /*
+        if let targetURL = NSURL(string: "https://twitter.com/superlOrzx") {
+            let urlRequest = NSURLRequest(url: targetURL as URL)
+            twitterWebView.loadRequest(urlRequest as URLRequest)
+        }*/
+        
+        guard let targetURL = NSURL(string: "https://twitter.com/superlOrzx") else {
+            NSLog("Not a valid url")
+            return
+        }
+        let urlRequest = NSURLRequest(url: targetURL as URL)
+        twitterWebView.loadRequest(urlRequest as URLRequest)
+        
+    }
 }
 
