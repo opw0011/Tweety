@@ -8,6 +8,7 @@
 
 import UIKit
 import Social
+import Accounts
 
 class ViewController: UITableViewController {
     
@@ -66,7 +67,57 @@ class ViewController: UITableViewController {
     }
     
     func reloadTweets() {
+        // get twitter account
+        let accountStore = ACAccountStore()
+        let twitterAccountType = accountStore.accountType(withAccountTypeIdentifier: ACAccountTypeIdentifierTwitter)
+        
+        // handler to call when access is granted or denined
+        let handler = {(granted: Bool, error: Error?) -> Void in
+            guard granted else {
+                NSLog("Account access not granted")
+                return
+            }
+            
+            // after having permission to access acount store, check if at least one twitter exists
+            let twitterAccounts = accountStore.accounts(with: twitterAccountType)
+            guard (twitterAccounts?.count)! > 0 else {
+                NSLog("No twitter account configured")
+                return
+            }
+            
+            // configure twitter API request
+            let twitterAPIURL = NSURL(string: "https://api.twitter.com/1.1/statuses/home_timeline.json") as! URL
+            let request = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: .GET, url: twitterAPIURL, parameters: ["count" : "10"])
+            request?.account = twitterAccounts?.first as! ACAccount!
+            
+            // make a twitter api request
+            request?.perform(handler: { (data: Data?, urlResponse: HTTPURLResponse?, error: Error?) in
+                self.handleTwitterData(data: data, urlResponse: urlResponse, error: error)
+            })
+            
+        }
+        
+        accountStore.requestAccessToAccounts(with: twitterAccountType, options: nil, completion: handler)
+        
         tableView.reloadData()
+    }
+    
+    // callback function after the twitter API is called
+    private func handleTwitterData(data: Data?, urlResponse: HTTPURLResponse?, error: Error?) {
+        guard let data = data else {
+            NSLog("handleTwitterData() receive no data")
+            return
+        }
+        NSLog("handleTwitterData() \(data.count) bytes")
+        
+        // try parsing json object
+        do {
+            let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+            print("json: \(jsonObject)")
+            // NSLog("JSON OBJ: \(jsonObject)") // this does not work :(
+        } catch let error as NSError{
+            NSLog("JSON Error: \(error)")
+        }        
     }
     
     @IBAction func handleRefresh (sender: AnyObject?) {
