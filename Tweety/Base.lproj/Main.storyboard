@@ -93,6 +93,7 @@
                                     <outlet property="createdAtLabel" destination="iv4-jw-tIo" id="K6q-SQ-gIj"/>
                                     <outlet property="tweetTextLabel" destination="Y2j-KL-bya" id="vMS-Ip-omG"/>
                                     <outlet property="userNameLabel" destination="niv-du-7RY" id="laO-Je-F0x"/>
+                                    <segue destination="Pn0-dj-F7Y" kind="show" identifier="showTweetDetailsSegue" id="X46-RM-yp2"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -140,6 +141,55 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bd5-7v-1pw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="102" y="-468"/>
+        </scene>
+        <!--Tweet-->
+        <scene sceneID="We4-LD-YVF">
+            <objects>
+                <viewController id="Pn0-dj-F7Y" customClass="TweetDetailViewController" customModule="Tweety" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ai3-t8-FmT"/>
+                        <viewControllerLayoutGuide type="bottom" id="R9r-j8-caa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XaG-G5-XO7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fFJ-Ag-VGt">
+                                <rect key="frame" x="16" y="74" width="84" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Tweet String Content" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="tA2-Ik-dUk">
+                                <rect key="frame" x="16" y="115" width="343" height="508"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fFJ-Ag-VGt" firstAttribute="top" secondItem="ai3-t8-FmT" secondAttribute="bottom" constant="10" id="4QX-hJ-Gl0"/>
+                            <constraint firstItem="R9r-j8-caa" firstAttribute="top" secondItem="tA2-Ik-dUk" secondAttribute="bottom" id="5al-gI-NFg"/>
+                            <constraint firstItem="tA2-Ik-dUk" firstAttribute="top" secondItem="fFJ-Ag-VGt" secondAttribute="bottom" constant="20" id="6wm-ED-pyx"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tA2-Ik-dUk" secondAttribute="trailing" id="HRq-ZO-B0k"/>
+                            <constraint firstItem="fFJ-Ag-VGt" firstAttribute="leading" secondItem="XaG-G5-XO7" secondAttribute="leadingMargin" id="Pmw-ps-EHA"/>
+                            <constraint firstItem="tA2-Ik-dUk" firstAttribute="leading" secondItem="XaG-G5-XO7" secondAttribute="leadingMargin" id="uXL-41-Aa8"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems>
+                        <barButtonItem title="Item" id="wtC-Lx-QEg"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Tweet" id="Ucg-MV-wIF"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="tweetTextView" destination="tA2-Ik-dUk" id="e63-Ya-MPi"/>
+                        <outlet property="userNameLabel" destination="fFJ-Ag-VGt" id="enf-rj-WaC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fyh-4C-2lX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1520.8" y="-468.21589205397305"/>
         </scene>
     </scenes>
 </document>

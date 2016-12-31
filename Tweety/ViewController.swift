@@ -174,7 +174,7 @@ class ViewController: UITableViewController {
         refreshControl?.endRefreshing()
     }
     
-    
+    // Action handler when the compose tweet button is clicked
     @IBAction func SendTweetButtonClicked(_ sender: UIBarButtonItem) {
         NSLog("Send tweet button is clicked")
         
@@ -192,5 +192,23 @@ class ViewController: UITableViewController {
             NSLog("Your device does not support twitter")
         }
     }
+    
+    
+    // passing data via a sugue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showTweetDetailsSegue" {
+            if let row = tableView.indexPathForSelectedRow?.row,
+                let tweetDetailVC = segue.destination as? TweetDetailViewController{
+                let selectedTweet = parsedTweets[row]
+                NSLog("Clicked on \(selectedTweet.tweetText)")
+                tweetDetailVC.tweetString = selectedTweet.tweetText
+                tweetDetailVC.username = selectedTweet.userName
+
+            }
+        
+        }
+    }
+    
+    
 }
 
