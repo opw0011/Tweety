@@ -59,10 +59,19 @@ class ViewController: UITableViewController {
         cell.userNameLabel.text = parsedTweet.userName
         cell.tweetTextLabel.text = parsedTweet.tweetText
         cell.createdAtLabel.text = parsedTweet.createdAt
-        if let url = parsedTweet.userAvatarURL, let imageData = NSData(contentsOf: url as URL) {
-            cell.avatarImageView.image = UIImage(data: imageData as Data)
-        }
         
+        // Load image in background thread
+        DispatchQueue.global().async {
+            if let url = parsedTweet.userAvatarURL,
+                let imageData = NSData(contentsOf: url as URL),
+                cell.userNameLabel.text == parsedTweet.userName {
+                    // update UI in main thread
+                    DispatchQueue.main.async {
+                        cell.avatarImageView.image = UIImage(data: imageData as Data)
+                    }
+            }
+        }
+
         return cell
     }
     
@@ -113,7 +122,7 @@ class ViewController: UITableViewController {
         // try parsing json object
         do {
             let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
-            // print("json: \(jsonObject)")
+//            print("json: \(jsonObject)")
             // NSLog("JSON OBJ: \(jsonObject)") // this does not work :(
             
             guard let jsonArray = jsonObject as? [[String: AnyObject]] else {
@@ -139,7 +148,14 @@ class ViewController: UITableViewController {
                 
                 parsedTweets.append(parsedTweet)
             }
-            tableView.reloadData()
+            
+            NSLog(Thread.isMainThread ? "main thread" : "not main thread")
+            
+            // update the UI in the main thread
+            DispatchQueue.main.async {
+                NSLog( "reload  \(Thread.isMainThread ? "main thread" : "not main thread") ")
+                self.tableView.reloadData()
+            }
             
         } catch let error as NSError{
             NSLog("JSON Error: \(error)")
