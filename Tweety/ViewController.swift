@@ -96,7 +96,7 @@ class ViewController: UITableViewController {
             
             // configure twitter API request
             let twitterAPIURL = NSURL(string: "https://api.twitter.com/1.1/statuses/home_timeline.json") as! URL
-            let request = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: .GET, url: twitterAPIURL, parameters: ["count" : "10"])
+            let request = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: .GET, url: twitterAPIURL, parameters: ["count" : "50"])
             request?.account = twitterAccounts?.first as! ACAccount!
             
             // make a twitter api request
@@ -172,6 +172,25 @@ class ViewController: UITableViewController {
 //        )
         reloadTweets()
         refreshControl?.endRefreshing()
+    }
+    
+    
+    @IBAction func SendTweetButtonClicked(_ sender: UIBarButtonItem) {
+        NSLog("Send tweet button is clicked")
+        
+        // check whether twitter is available in the device
+        if SLComposeViewController.isAvailable(forServiceType: SLServiceTypeTwitter) {
+            
+            // create a tweeter view controller
+            let tweetVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+            
+            tweetVC?.setInitialText("This is a awesome iOS app written in Swift 3! #swift3")
+            
+            // show the tweet view controller
+            self.present(tweetVC!, animated: true, completion: nil)
+        } else {
+            NSLog("Your device does not support twitter")
+        }
     }
 }
 

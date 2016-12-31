@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ACD-oF-O6t">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="RBa-TO-zoD">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--My Tweets-->
         <scene sceneID="7qO-LC-647">
             <objects>
                 <tableViewController id="ACD-oF-O6t" customClass="ViewController" customModule="Tweety" customModuleProvider="target" sceneMemberID="viewController">
@@ -101,7 +101,15 @@
                             <outlet property="delegate" destination="ACD-oF-O6t" id="9Yl-ct-I6w"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="My Tweets" id="ez8-Lt-I3q">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="gXv-x8-5qT">
+                            <connections>
+                                <action selector="SendTweetButtonClicked:" destination="ACD-oF-O6t" id="e1o-k2-QEt"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="xci-7R-Zv9">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <attributedString key="attributedTitle">
                             <fragment content="Pull down to refresh...">
@@ -115,7 +123,23 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qkg-Po-4g7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="103" y="184"/>
+            <point key="canvasLocation" x="836" y="-468"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Fcg-Br-vf5">
+            <objects>
+                <navigationController id="RBa-TO-zoD" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="o1y-Lh-0lX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="ACD-oF-O6t" kind="relationship" relationship="rootViewController" id="lCL-iA-43I"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bd5-7v-1pw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="102" y="-468"/>
         </scene>
     </scenes>
 </document>
