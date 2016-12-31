@@ -59,15 +59,31 @@
 			isa = PBXGroup;
 			children = (
 				B2B5D0821E0F9F6D00C87F9E /* AppDelegate.swift */,
-				B2B5D0841E0F9F6D00C87F9E /* ViewController.swift */,
-				B2F30FE61E1278FB003D801F /* ParsedTweetCell.swift */,
-				B2F30FE41E126DA3003D801F /* ParsedTweet.swift */,
+				B2F30FE81E179166003D801F /* Root VC */,
+				B2F30FEA1E179198003D801F /* Twitter Utilities */,
 				B2B5D0861E0F9F6D00C87F9E /* Main.storyboard */,
 				B2B5D0891E0F9F6D00C87F9E /* Assets.xcassets */,
 				B2B5D08B1E0F9F6D00C87F9E /* LaunchScreen.storyboard */,
 				B2B5D08E1E0F9F6D00C87F9E /* Info.plist */,
 			);
 			path = Tweety;
+			sourceTree = "<group>";
+		};
+		B2F30FE81E179166003D801F /* Root VC */ = {
+			isa = PBXGroup;
+			children = (
+				B2B5D0841E0F9F6D00C87F9E /* ViewController.swift */,
+				B2F30FE61E1278FB003D801F /* ParsedTweetCell.swift */,
+			);
+			name = "Root VC";
+			sourceTree = "<group>";
+		};
+		B2F30FEA1E179198003D801F /* Twitter Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B2F30FE41E126DA3003D801F /* ParsedTweet.swift */,
+			);
+			name = "Twitter Utilities";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
