@@ -13,16 +13,16 @@ import Accounts
 class ViewController: UITableViewController {
     
     var parsedTweets: [ParsedTweet] = [
-        ParsedTweet(tweetText: "Content",
-                    userName: "@oo",
-                    createdAt: "2016-2-23",
-                    userAvatarURL: NSURL(string: "https://abs.twimg.com/sticky/default_profile_images/default_profile_6_200x200.png")
-                    ),
-        ParsedTweet(tweetText: "Content 2",
-                    userName: "@o",
-                    createdAt: "2016-7-23",
-                    userAvatarURL: NSURL(string: "https://abs.twimg.com/sticky/default_profile_images/default_profile_6_normal.png")
-        )
+//        ParsedTweet(tweetText: "Content",
+//                    userName: "@oo",
+//                    createdAt: "2016-2-23",
+//                    userAvatarURL: NSURL(string: "https://abs.twimg.com/sticky/default_profile_images/default_profile_6_200x200.png")
+//                    ),
+//        ParsedTweet(tweetText: "Content 2",
+//                    userName: "@o",
+//                    createdAt: "2016-7-23",
+//                    userAvatarURL: NSURL(string: "https://abs.twimg.com/sticky/default_profile_images/default_profile_6_normal.png")
+//        )
     ]
 
     override func viewDidLoad() {
@@ -97,9 +97,9 @@ class ViewController: UITableViewController {
             
         }
         
+        // access to the twitter account
         accountStore.requestAccessToAccounts(with: twitterAccountType, options: nil, completion: handler)
         
-        tableView.reloadData()
     }
     
     // callback function after the twitter API is called
@@ -113,21 +113,47 @@ class ViewController: UITableViewController {
         // try parsing json object
         do {
             let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
-            print("json: \(jsonObject)")
+            // print("json: \(jsonObject)")
             // NSLog("JSON OBJ: \(jsonObject)") // this does not work :(
+            
+            guard let jsonArray = jsonObject as? [[String: AnyObject]] else {
+                NSLog("handleJsonData() did not get json array")
+                return
+            }
+            // remove old data
+            parsedTweets.removeAll()
+            
+            for tweetDict in jsonArray {
+                // initialize a new parsedTweet obj
+                var parsedTweet = ParsedTweet()
+                parsedTweet.tweetText = tweetDict["text"] as? String
+                parsedTweet.createdAt = tweetDict["created_at"] as? String
+                
+                // parse user data
+                if let userDict = tweetDict["user"] as? [String: AnyObject] {
+                    parsedTweet.userName = userDict["name"] as? String
+                    if let avatarURLString = userDict["profile_image_url_https"] as? String {
+                        parsedTweet.userAvatarURL = NSURL(string: avatarURLString)
+                    }
+                }
+                
+                parsedTweets.append(parsedTweet)
+            }
+            tableView.reloadData()
+            
         } catch let error as NSError{
             NSLog("JSON Error: \(error)")
-        }        
+        }
     }
     
     @IBAction func handleRefresh (sender: AnyObject?) {
-        parsedTweets.append(
-            ParsedTweet(tweetText: "New tweet",
-                        userName: "@refresh",
-                        createdAt: NSDate().description,
-                        userAvatarURL: NSURL(string: "https://abs.twimg.com/sticky/default_profile_images/default_profile_6_200x200.png")
-            )
-        )
+//        parsedTweets.append(
+//            ParsedTweet(tweetText: "New tweet",
+//                        userName: "@refresh",
+//                        createdAt: NSDate().description,
+//                        userAvatarURL: NSURL(string: "https://abs.twimg.com/sticky/default_profile_images/default_profile_6_200x200.png")
+//            )
+//        )
         reloadTweets()
         refreshControl?.endRefreshing()
     }
